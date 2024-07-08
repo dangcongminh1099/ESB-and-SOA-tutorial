@@ -1,0 +1,42 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CallExternalCaculateAPI"
+     targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/CallExternalCaculateAPI"
+     xmlns:tns="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/CallExternalCaculateAPI"
+     xmlns:inp1="http://TargetNamespace.com/CallExternalCaculateAPI_CallOperation_response"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="CallExternalCaculateAPI">
+        <plnk:role name="CallExternalCaculateAPIProvider" portType="tns:CallExternalCaculateAPI_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/CallExternalCaculateAPI_CallOperation_response"
+                 schemaLocation="../Schemas/desc_resp_external_api.xsd"/>
+        </xsd:schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/CallExternalCaculateAPI"
+             elementFormDefault="qualified">
+            <element name="CallOperation_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                        <element name="param2" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CallOperation_inputMessage">
+        <wsdl:part name="request" element="tns:CallOperation_params"/>
+    </wsdl:message>
+    <wsdl:message name="CallOperation_outputMessage">
+        <wsdl:part name="reply" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:portType name="CallExternalCaculateAPI_ptt">
+        <wsdl:operation name="CallOperation">
+            <wsdl:input message="tns:CallOperation_inputMessage"/>
+            <wsdl:output message="tns:CallOperation_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

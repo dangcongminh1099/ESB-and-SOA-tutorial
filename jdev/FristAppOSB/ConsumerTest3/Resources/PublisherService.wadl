@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://TargetNamespace.com/PublisherService_SumCall_request" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PublisherService">publish and expose api</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/PublisherService_SumCall_request" schemaLocation="des_publisher_req.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/PublisherService_SumCall_response" schemaLocation="des_publisher_response.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/sum-call">
+         <method name="POST" soa:wsdlOperation="SumCall">
+            <request>
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/PublisherService_SumCall_request"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/PublisherService_SumCall_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

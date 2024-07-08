@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="ConsumerTest3/Resources/PublisherService"/>
+            <con:binding>
+                <con:name>PublisherService_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/FristAppOSB/ConsumerTest3/PublisherService</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="pub1" namespace="http://TargetNamespace.com/PublisherService_SumCall_response"/>
+                    <con2:userNsDecl prefix="pub" namespace="http://TargetNamespace.com/PublisherService_SumCall_request"/>
+                    <con2:userNsDecl prefix="ns1" namespace="http://TargetNamespace.com/ConsumerAPIReference_SumOperation_response"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N8000</con2:id>
+                        <con1:service ref="ConsumerTest3/ConsumerAPIReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>SumOperation</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:assign varName="var_rq" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N7ffd</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="ConsumerTest3/mapping_req_publish2_consumer"/>
+                                        <con2:param name="rq_publisher">
+                                            <con2:path>$body/pub:Root-Element</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N7ffa</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>$var_rq</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con3:assign varName="respone_ve" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N7ff1</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$body/ns1:Root-Element</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="var_resp" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N7ff7</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="ConsumerTest3/mapping_resp_consumer2_publisher"/>
+                                        <con2:param name="resp_consumer">
+                                            <con2:path>$body/ns1:Root-Element</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N63444c29.0.18e402d26eb.N7ff4</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>$var_resp</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

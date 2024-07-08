@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CallBackApi">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="../../BackEndApi/Resources/BEA_RestApiFromInternalApp_req_desc.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="../../BackEndApi/Resources/BEA_RestApiFromInternalApp_resp_desc.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/test">
+         <method name="PUT" soa:wsdlOperation="Operation2">
+            <request>
+               <ns0:representation mediaType="application/json" element="req_restapifrominternalapp" xmlns="" xmlns:ns0="http://wadl.dev.java.net/2009/02"/>
+            </request>
+            <response status="200">
+               <ns0:representation mediaType="application/json" element="res_restapifrominternalapp" xmlns="" xmlns:ns0="http://wadl.dev.java.net/2009/02"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

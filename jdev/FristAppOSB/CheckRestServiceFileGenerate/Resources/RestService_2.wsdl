@@ -1,0 +1,32 @@
+<wsdl:definitions name="RestService_2" targetNamespace="http://xmlns.oracle.com/FristAppOSB/CheckRestServiceFileGenerate/RestService_2" xmlns:tns="http://xmlns.oracle.com/FristAppOSB/CheckRestServiceFileGenerate/RestService_2" xmlns:inp1="http://TargetNamespace.com/RestService_2_operation_test2_request" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="RestService_2">
+        <plnk:role name="RestService_2Provider" portType="tns:RestService_2_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/RestService_2_operation_test2_request" schemaLocation="file_mo_ta_request_api_service_2.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="operation_test2_inputMessage">
+        <wsdl:part name="request" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:message name="Rest_EmptyMessage"/>
+    <wsdl:portType name="RestService_2_ptt">
+        <wsdl:operation name="operation_test2">
+            <wsdl:input message="tns:operation_test2_inputMessage"/>
+            <wsdl:output message="tns:Rest_EmptyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RestService_2_ptt-binding" type="tns:RestService_2_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="operation_test2">
+            <soap:operation soapAction="operation_test2"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

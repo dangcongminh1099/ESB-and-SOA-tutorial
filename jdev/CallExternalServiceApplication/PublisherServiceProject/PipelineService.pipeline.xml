@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/typesystem/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="PublisherServiceProject/Resources/PublisherRestService"/>
+            <con:binding>
+                <con:name>PublisherRestService_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/CallExternalServiceApplication/PublisherServiceProject/PublisherRestService</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="pub1" namespace="http://TargetNamespace.com/PublisherRestService_CallSumOperation_request"/>
+                    <con2:userNsDecl prefix="pub" namespace="http://TargetNamespace.com/PublisherRestService_CallSumOperation_response"/>
+                    <con2:userNsDecl prefix="fapp_sum" namespace="http://TargetNamespace.com/SumService_SumOperation_response"/>
+                    <con3:variable name="resp_external" path="$external" asChild="true" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                        <con3:schema ref="PublisherServiceProject/nxsd_schema1" element="Root-Element"/>
+                    </con3:variable>
+                    <con3:variable name="resp_body" path="$resp_body" asChild="false" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+                        <con3:schema ref="PublisherServiceProject/nxsd_schema1" element="Root-Element"/>
+                    </con3:variable>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N56011e8c.N50068fc6.0.18e54b0727e.N7ffe</con2:id>
+                        <con1:service ref="PublisherServiceProject/ConsumerReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>SumCalOperation</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N50068fc6.0.18e54b0727e.N7ffb</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText><![CDATA[<con:SumCalOperation_params xmlns:con="http://xmlns.oracle.com/CallExternalServiceApplication/PublisherServiceProject/ConsumerReference">
+<con:param1>{$body/pub1:Root-Element/pub1:var1}</con:param1>
+<con:param2>{$body/pub1:Root-Element/pub1:var2}</con:param2>
+</con:SumCalOperation_params>]]></con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con3:assign varName="var_resp_result_val" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N50068fc6.0.18e54b0727e.N7ff5</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$body/fapp_sum:Root-Element/fapp_sum:result/text()</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace contents-only="true" varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N56011e8c.N50068fc6.0.18e54b0727e.N7ff8</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText><![CDATA[<pub:Root-Element>
+<pub:mid>9999-default</pub:mid>
+<pub:result>{$external/fapp_sum:Root-Element/fapp_sum:result}</pub:result>
+</pub:Root-Element>]]></con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

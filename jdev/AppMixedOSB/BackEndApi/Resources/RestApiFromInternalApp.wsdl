@@ -1,0 +1,37 @@
+<wsdl:definitions name="RestApiFromInternalApp" targetNamespace="http://xmlns.oracle.com/AppMixedOSB/BackEndApi/RestApiFromInternalApp" xmlns:tns="http://xmlns.oracle.com/AppMixedOSB/BackEndApi/RestApiFromInternalApp" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="RestApiFromInternalApp">
+        <plnk:role name="RestApiFromInternalAppProvider" portType="tns:RestApiFromInternalApp_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="BEA_RestApiFromInternalApp_req_desc.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="BEA_RestApiFromInternalApp_resp_desc.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="TestOperation1_inputMessage">
+        <wsdl:part name="request" element="req_restapifrominternalapp"/>
+    </wsdl:message>
+    <wsdl:message name="TestOperation1_outputMessage">
+        <wsdl:part name="reply" element="res_restapifrominternalapp"/>
+    </wsdl:message>
+    <wsdl:portType name="RestApiFromInternalApp_ptt">
+        <wsdl:operation name="TestOperation1">
+            <wsdl:input message="tns:TestOperation1_inputMessage"/>
+            <wsdl:output message="tns:TestOperation1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RestApiFromInternalApp_ptt-binding" type="tns:RestApiFromInternalApp_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TestOperation1">
+            <soap:operation soapAction="TestOperation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

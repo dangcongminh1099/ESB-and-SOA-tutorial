@@ -1,0 +1,11 @@
+<adapter-config name="AdapterDB4CustomSQL" adapter="db" wsdlLocation="AdapterDB4CustomSQL.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="ConnectionXeDB" location="eis/DB/ConnectionXeDB"/>
+  <endpoint-interaction portType="AdapterDB4CustomSQL_ptt" operation="AdapterDB4CustomSQL">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select a.firstname,a.lastname,a.age,b.address,b.national from userdata a inner join useraddress b on a.id = b.user_id where a.age >?"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

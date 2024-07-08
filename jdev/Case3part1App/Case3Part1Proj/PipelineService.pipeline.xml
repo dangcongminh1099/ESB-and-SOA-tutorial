@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="Case3Part1Proj/Resources/RestServiceCase3Part1"/>
+            <con:binding>
+                <con:name>RestServiceCase3Part1_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/Case3part1App/Case3Part1Proj/RestServiceCase3Part1</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N560181ad.N447269a6.0.18f7a6df3ca.N7fff">
+            <con:stage id="_StageId-N560181ad.N447269a6.0.18f7a6df3ca.N7ffd" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="res" namespace="http://TargetNamespace.com/RestServiceCase3Part1_Operation1_request"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="var_param1">
+                        <con1:id>_ActionId-N560181ad.N447269a6.0.18f7a6df3ca.N7ff5</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/res:Root-Element/res:param1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="var_param2">
+                        <con1:id>_ActionId-N560181ad.N447269a6.0.18f7a6df3ca.N7ff2</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/res:Root-Element/res:param2</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N560181ad.N447269a6.0.18f7a6df3ca.N7ffe">
+            <con:stage id="_StageId-N560181ad.N447269a6.0.18f7a6df3ca.N7ffc" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="res" namespace="http://TargetNamespace.com/RestServiceCase3Part1_Operation1_request"/>
+                    <con1:userNsDecl prefix="res1" namespace="http://TargetNamespace.com/RestServiceCase3Part1_Sum_opr_response"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="var_response">
+                        <con1:id>_ActionId-N560181ad.N447269a6.0.18f7a6df3ca.N7fef</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>&lt;res1:Root-Element>&lt;res1:sum_result>{$body/res:Root-Element/res:param1+$body/res:Root-Element/res:param2}&lt;/res1:sum_result>&lt;/res1:Root-Element></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N560181ad.N447269a6.0.18f7a6df3ca.N7feb</con1:id>
+                        <con2:location>
+                            <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>$var_response</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N560181ad.N447269a6.0.18f7a6df3ca.N7ffb">
+            <con:stage id="_StageId-N560181ad.N447269a6.0.18f7a6df3ca.N7ff9" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="res" namespace="http://TargetNamespace.com/RestServiceCase3Part1_DoubleOpr_request"/>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="var_double">
+                        <con1:id>_ActionId-N560181ad.c9be3d8.0.18f98ae9faa.N7ffe</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/res:Root-Element/res:param1*$body/res:Root-Element/res:param1</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N560181ad.N447269a6.0.18f7a6df3ca.N7ffa">
+            <con:stage id="_StageId-N560181ad.N447269a6.0.18f7a6df3ca.N7ff8" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="res" namespace="http://TargetNamespace.com/RestServiceCase3Part1_DoubleOpr_response"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N560181ad.c9be3d8.0.18f98ae9faa.N7ffb</con1:id>
+                        <con2:location>
+                            <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>&lt;res:Root-Element>&lt;res:doubleOprResult>{$var_dobule}&lt;/res:doubleOprResult>&lt;/res:Root-Element></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-N560181ad.N447269a6.0.18f7a6df3ca.N8000" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="Sum_opr">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>request-N560181ad.N447269a6.0.18f7a6df3ca.N7fff</con:request>
+                                <con:response>response-N560181ad.N447269a6.0.18f7a6df3ca.N7ffe</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="DoubleOpr">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>request-N560181ad.N447269a6.0.18f7a6df3ca.N7ffb</con:request>
+                                <con:response>response-N560181ad.N447269a6.0.18f7a6df3ca.N7ffa</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

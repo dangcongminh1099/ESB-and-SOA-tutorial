@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PublishService">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/PublishService_ExternalAPICall_response" schemaLocation="publish-service-resp_desciption.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/test-publish-external-api">
+         <method name="POST" soa:wsdlOperation="ExternalAPICall">
+            <request/>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/PublishService_ExternalAPICall_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

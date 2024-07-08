@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RestConcatService">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="es_desc_soap_req.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="ex_desc_resp.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/concat">
+         <method name="POST" soa:wsdlOperation="ConcatOperation">
+            <request>
+               <ns0:representation mediaType="application/xml" element="minhdc-root" xmlns="" xmlns:ns0="http://wadl.dev.java.net/2009/02"/>
+            </request>
+            <response status="200">
+               <ns0:representation mediaType="application/xml" element="final-str" xmlns="" xmlns:ns0="http://wadl.dev.java.net/2009/02"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

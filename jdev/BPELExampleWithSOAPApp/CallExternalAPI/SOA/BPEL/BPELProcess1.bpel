@@ -1,0 +1,74 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Mon Mar 25 13:40:14 ICT 2024
+  Author:  minhdc3
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+               targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/BPELProcess1"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/BPELProcess1"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/ExposeRestService"
+         xmlns:ns2="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/CallExternalCaculateAPI"
+         xmlns:ns3="http://TargetNamespace.com/ExposeRestService_ExposeCalOperation_request"
+         xmlns:ns4="http://TargetNamespace.com/ExposeRestService_ExposeCalOperation_response"
+         xmlns:ns5="http://TargetNamespace.com/CallExternalCaculateAPI_CallOperation_response"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/CallExternalAPI/ExposeRestService"
+          location="../WSDLs/ExposeRestService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+          ui:processWSDL="true"/>
+  <partnerLinks>
+    <partnerLink name="ExposeRestService" partnerLinkType="ns1:ExposeRestService" myRole="ExposeRestServiceProvider"/>
+    <partnerLink name="CallExternalCaculateAPI" partnerLinkType="ns2:CallExternalCaculateAPI"
+                 partnerRole="CallExternalCaculateAPIProvider"/>
+  </partnerLinks>
+  <variables>
+    <variable name="var_req2_bpel" messageType="ns1:ExposeCalOperation_inputMessage"/>
+    <variable name="var_bpel_resp" messageType="ns1:ExposeCalOperation_outputMessage"/>
+    <variable name="reqest_external_cal_from_bpel" messageType="ns2:CallOperation_inputMessage"/>
+    <variable name="var_rq_from_bpel_to_external" messageType="ns2:CallOperation_inputMessage"/>
+    <variable name="var_resp_from_external_to_bpel" messageType="ns2:CallOperation_outputMessage"/>
+  </variables>
+  <sequence name="main">
+    <receive name="Receive1" partnerLink="ExposeRestService" portType="ns1:ExposeRestService_ptt"
+             operation="ExposeCalOperation" variable="var_req2_bpel" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$reqest_external_cal_from_bpel.request/ns2:param1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$var_req2_bpel.request/ns3:val1</to>
+      </copy>
+      <copy>
+        <from>$reqest_external_cal_from_bpel.request/ns2:param2</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$var_req2_bpel.request/ns3:val2</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke1" partnerLink="CallExternalCaculateAPI"
+            portType="ns2:CallExternalCaculateAPI_ptt" operation="CallOperation"
+            inputVariable="var_rq_from_bpel_to_external" outputVariable="var_resp_from_external_to_bpel"
+            bpelx:invokeAsDetail="no"/>
+    <assign name="Assign2">
+      <copy>
+        <from>$var_resp_from_external_to_bpel.reply/ns5:result</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$var_bpel_resp.reply/ns4:finalResult</to>
+      </copy>
+    </assign>
+    <reply name="Reply1" partnerLink="ExposeRestService" variable="var_bpel_resp" portType="ns1:ExposeRestService_ptt"
+           operation="ExposeCalOperation"/>
+  </sequence>
+</process>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RestService">RestService</doc>
+   <resources>
+      <resource path="/test">
+         <method name="DELETE" soa:name="Method1">
+            <request>
+               <param name="param1" style="query" default="param1" type="xsd:string">
+                  <doc title="param1">param1</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="500"/>
+         </method>
+      </resource>
+   </resources>
+</application>

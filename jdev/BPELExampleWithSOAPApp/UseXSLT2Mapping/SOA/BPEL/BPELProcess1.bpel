@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Mon Apr 08 21:49:33 ICT 2024
+  Author:  minhdc3
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+               targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/BPELProcess1"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/BPELProcess1"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/ExposeRestServiceCal"
+         xmlns:ns2="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/RestReference">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <partnerLink name="ExposeRestServiceCal" partnerLinkType="ns1:ExposeRestServiceCal"
+                 myRole="ExposeRestServiceCalProvider"/>
+    <partnerLink name="RestReference" partnerLinkType="ns2:RestReference" partnerRole="RestReferenceProvider"/>
+  </partnerLinks>
+  <variables>
+    <variable name="Receive1_Operation1_InputVariable" messageType="ns1:Operation1_inputMessage"/>
+    <variable name="Receive1_Operation1_InputVariable_1" messageType="ns1:Operation1_inputMessage"/>
+    <variable name="Invoke1_SumOpr_OutputVariable" messageType="ns2:SumOpr_outputMessage"/>
+    <variable name="Invoke1_SumOpr_InputVariable" messageType="ns2:SumOpr_inputMessage"/>
+    <variable name="Reply1_Operation1_OutputVariable" messageType="ns1:Operation1_outputMessage"/>
+  </variables>
+  <sequence name="main">
+    <receive name="Receive1" createInstance="yes" partnerLink="ExposeRestServiceCal"
+             portType="ns1:ExposeRestServiceCal_ptt" operation="Operation1"
+             variable="Receive1_Operation1_InputVariable"/>
+    <assign name="Transformation1">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transformation_1.xsl", $Receive1_Operation1_InputVariable.request)</from>
+        <to variable="Invoke1_SumOpr_InputVariable" part="request"/>
+      </copy>
+    </assign>
+    <invoke name="Invoke1" partnerLink="RestReference" portType="ns2:RestReference_ptt"
+            operation="SumOpr" inputVariable="Invoke1_SumOpr_InputVariable"
+            outputVariable="Invoke1_SumOpr_OutputVariable" bpelx:invokeAsDetail="no"/>
+    <assign name="Transformation2">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transformation_2.xsl", $Invoke1_SumOpr_OutputVariable.reply)</from>
+        <to variable="Reply1_Operation1_OutputVariable" part="reply"/>
+      </copy>
+    </assign>
+    <reply name="Reply1" partnerLink="ExposeRestServiceCal" variable="Reply1_Operation1_OutputVariable"
+           portType="ns1:ExposeRestServiceCal_ptt" operation="Operation1"/>
+  </sequence>
+</process>

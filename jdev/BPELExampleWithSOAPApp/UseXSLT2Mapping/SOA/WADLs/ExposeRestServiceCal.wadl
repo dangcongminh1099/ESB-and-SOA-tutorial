@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="ExposeRestServiceCal">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ExposeRestServiceCal_Operation1_response" schemaLocation="../Schemas/desc_expose_service_resp.xsd"/>
+        </xsd:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/ExposeRestServiceCal" elementFormDefault="qualified">
+            <element name="Operation1_params">
+                <complexType>
+                    <sequence>
+                        <element name="numb1" type="string"/>
+                        <element name="numb2" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+   </grammars>
+   <resources>
+      <resource path="/sum_cal">
+         <method name="GET" soa:wsdlOperation="Operation1">
+            <request soa:paramElement="pns:Operation1_params" xmlns:pns="http://xmlns.oracle.com/BPELExampleWithSOAPApp/UseXSLT2Mapping/ExposeRestServiceCal">
+               <param name="numb1" style="query" soa:expression="$msg.request/pns:numb1" type="xsd:string">
+                  <doc title="numb1">numb1</doc>
+               </param>
+               <param name="numb2" style="query" soa:expression="$msg.request/pns:numb2" type="xsd:string">
+                  <doc title="numb2">numb2</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/ExposeRestServiceCal_Operation1_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

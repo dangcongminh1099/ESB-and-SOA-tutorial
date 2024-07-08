@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="ConsumerAPIReference">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConsumerAPIReference_SumOperation_response" schemaLocation="desc_consumer_resp.xsd"/>
+        </xsd:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/FristAppOSB/ConsumerTest3/ConsumerAPIReference" elementFormDefault="qualified">
+            <element name="SumOperation_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                        <element name="param2" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+   </grammars>
+   <resources>
+      <resource path="/sum">
+         <method name="GET" soa:wsdlOperation="SumOperation">
+            <request soa:paramElement="pns:SumOperation_params" xmlns:pns="http://xmlns.oracle.com/FristAppOSB/ConsumerTest3/ConsumerAPIReference">
+               <param name="param1" style="query" soa:expression="$msg.request/pns:param1" type="xsd:string">
+                  <doc title="param1">param1</doc>
+               </param>
+               <param name="param2" style="query" soa:expression="$msg.request/pns:param2" type="xsd:string">
+                  <doc title="param2">param2</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/ConsumerAPIReference_SumOperation_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

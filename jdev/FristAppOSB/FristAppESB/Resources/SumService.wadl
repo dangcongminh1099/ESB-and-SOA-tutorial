@@ -1,0 +1,52 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns0="http://TargetNamespace.com/SumService_ConcatOperation_request">
+   <doc title="SumService">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/SumService_SumOperation_response" schemaLocation="nxsd_schema1.xsd"/>
+        </xsd:schema>
+      <schema targetNamespace="http://xmlns.oracle.com/FristAppOSB/FristAppESB/SumService" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema">
+            <element name="SumOperation_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                        <element name="param2" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/SumService_ConcatOperation_request" schemaLocation="concatstring_request.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/SumService_ConcatOperation_response" schemaLocation="concatstring_resp.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/sum">
+         <method name="GET" soa:wsdlOperation="SumOperation">
+            <request soa:paramElement="pns:SumOperation_params" xmlns:pns="http://xmlns.oracle.com/FristAppOSB/FristAppESB/SumService">
+               <param name="param1" style="query" soa:expression="$msg.request/pns:param1" type="xsd:string" default="">
+                  <doc title="param1">param1</doc>
+               </param>
+               <param name="param2" style="query" soa:expression="$msg.request/pns:param2" type="xsd:string" default="">
+                  <doc title="param2">param2</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/SumService_SumOperation_response"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/concatstring">
+         <method name="POST" soa:wsdlOperation="ConcatOperation">
+            <request>
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/SumService_ConcatOperation_request"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/SumService_ConcatOperation_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

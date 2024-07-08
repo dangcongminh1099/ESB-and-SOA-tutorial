@@ -1,0 +1,43 @@
+<wsdl:definitions name="ExpseServiceCRUDRest" targetNamespace="http://xmlns.oracle.com/UserDataOSB/GetUserDataProject/ExpseServiceCRUDRest" xmlns:tns="http://xmlns.oracle.com/UserDataOSB/GetUserDataProject/ExpseServiceCRUDRest" xmlns:inp1="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterDbUserData" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="ExpseServiceCRUDRest">
+        <plnk:role name="ExpseServiceCRUDRestProvider" portType="tns:ExpseServiceCRUDRest_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterDbUserData" schemaLocation="AdapterDbUserData_table.xsd"/>
+        </xsd:schema>
+        <schema targetNamespace="http://xmlns.oracle.com/UserDataOSB/GetUserDataProject/ExpseServiceCRUDRest" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema">
+            <element name="SelectOperation_params">
+                <complexType>
+                    <sequence>
+                        <element name="id" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="SelectOperation_inputMessage">
+        <wsdl:part name="request" element="tns:SelectOperation_params"/>
+    </wsdl:message>
+    <wsdl:message name="SelectOperation_outputMessage">
+        <wsdl:part name="reply" element="inp1:UserdataCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="ExpseServiceCRUDRest_ptt">
+        <wsdl:operation name="SelectOperation">
+            <wsdl:input message="tns:SelectOperation_inputMessage"/>
+            <wsdl:output message="tns:SelectOperation_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ExpseServiceCRUDRest_ptt-binding" type="tns:ExpseServiceCRUDRest_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SelectOperation">
+            <soap:operation soapAction="SelectOperation"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RestReference">RestReference</doc>
+   <grammars>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/TempApp/TempProject/RestReference" elementFormDefault="qualified">
+            <element name="TestRefOperation1_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+   </grammars>
+   <resources>
+      <resource path="/test">
+         <method name="DELETE" soa:wsdlOperation="TestRefOperation1">
+            <request soa:paramElement="pns:TestRefOperation1_params" xmlns:pns="http://xmlns.oracle.com/TempApp/TempProject/RestReference">
+               <param name="param1" style="query" soa:expression="$msg.request/pns:param1" type="xsd:string">
+                  <doc title="param1">param1</doc>
+               </param>
+            </request>
+            <response status="204"/>
+         </method>
+      </resource>
+   </resources>
+</application>

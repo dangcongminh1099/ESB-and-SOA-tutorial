@@ -1,0 +1,44 @@
+<wsdl:definitions name="ConsumerReference" targetNamespace="http://xmlns.oracle.com/ConsumerApp/ConsumerRestTest/ConsumerReference" xmlns:tns="http://xmlns.oracle.com/ConsumerApp/ConsumerRestTest/ConsumerReference" xmlns:inp1="http://TargetNamespace.com/ConsumerReference_opr1_response" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="ConsumerReference">
+        <plnk:role name="ConsumerReferenceProvider" portType="tns:ConsumerReference_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConsumerReference_opr1_response" schemaLocation="desc_consumer_ref_resp.xsd"/>
+        </xsd:schema>
+        <schema targetNamespace="http://xmlns.oracle.com/ConsumerApp/ConsumerRestTest/ConsumerReference" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema">
+            <element name="opr1_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                        <element name="param2" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="opr1_inputMessage">
+        <wsdl:part name="request" element="tns:opr1_params"/>
+    </wsdl:message>
+    <wsdl:message name="opr1_outputMessage">
+        <wsdl:part name="reply" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:portType name="ConsumerReference_ptt">
+        <wsdl:operation name="opr1">
+            <wsdl:input message="tns:opr1_inputMessage"/>
+            <wsdl:output message="tns:opr1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ConsumerReference_ptt-binding" type="tns:ConsumerReference_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="opr1">
+            <soap:operation soapAction="opr1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

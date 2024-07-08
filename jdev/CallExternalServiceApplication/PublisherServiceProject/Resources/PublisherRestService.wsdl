@@ -1,0 +1,37 @@
+<wsdl:definitions name="PublisherRestService" targetNamespace="http://xmlns.oracle.com/CallExternalServiceApplication/PublisherServiceProject/PublisherRestService" xmlns:tns="http://xmlns.oracle.com/CallExternalServiceApplication/PublisherServiceProject/PublisherRestService" xmlns:inp1="http://TargetNamespace.com/PublisherRestService_CallSumOperation_request" xmlns:inp2="http://TargetNamespace.com/PublisherRestService_CallSumOperation_response" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="PublisherRestService">
+        <plnk:role name="PublisherRestServiceProvider" portType="tns:PublisherRestService_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/PublisherRestService_CallSumOperation_request" schemaLocation="desc_request_publisher.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/PublisherRestService_CallSumOperation_response" schemaLocation="desc_publisher_resp.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CallSumOperation_inputMessage">
+        <wsdl:part name="request" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:message name="CallSumOperation_outputMessage">
+        <wsdl:part name="reply" element="inp2:Root-Element"/>
+    </wsdl:message>
+    <wsdl:portType name="PublisherRestService_ptt">
+        <wsdl:operation name="CallSumOperation">
+            <wsdl:input message="tns:CallSumOperation_inputMessage"/>
+            <wsdl:output message="tns:CallSumOperation_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PublisherRestService_ptt-binding" type="tns:PublisherRestService_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CallSumOperation">
+            <soap:operation soapAction="CallSumOperation"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

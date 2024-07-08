@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UserDataOSB/GetUserDataProject/AdapterDB4CustomSQL" name="AdapterDB4CustomSQL-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="AdapterDB4CustomSQL.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/UserDataOSB/GetUserDataProject/AdapterDB4CustomSQL"/>
+    <wsdl:binding name="AdapterDB4CustomSQL_ptt-binding" type="adap:AdapterDB4CustomSQL_ptt" xmlns:adap="http://xmlns.oracle.com/pcbpel/adapter/db/UserDataOSB/GetUserDataProject/AdapterDB4CustomSQL">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="AdapterDB4CustomSQL">
+            <soap:operation soapAction="AdapterDB4CustomSQL"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

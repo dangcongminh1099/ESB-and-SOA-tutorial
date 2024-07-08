@@ -1,0 +1,35 @@
+<wsdl:definitions
+     name="AdapterDB4CustomSQL"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UserDataOSB/GetUserDataProject/AdapterDB4CustomSQL"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UserDataOSB/GetUserDataProject/AdapterDB4CustomSQL"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/AdapterDB4CustomSQL"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="AdapterDB4CustomSQL_plt" >
+    <plt:role name="AdapterDB4CustomSQL_role" >
+      <plt:portType name="tns:AdapterDB4CustomSQL_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/AdapterDB4CustomSQL" schemaLocation="AdapterDB4CustomSQL.xsd" />
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/AdapterDB4CustomSQL" schemaLocation="AdapterDB4CustomSQL.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="AdapterDB4CustomSQLInput_msg">
+        <wsdl:part name="AdapterDB4CustomSQLInput_msg" element="db:AdapterDB4CustomSQLInput"/>
+    </wsdl:message>
+    <wsdl:message name="AdapterDB4CustomSQLOutputCollection_msg">
+        <wsdl:part name="AdapterDB4CustomSQLOutputCollection" element="db:AdapterDB4CustomSQLOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="AdapterDB4CustomSQL_ptt">
+        <wsdl:operation name="AdapterDB4CustomSQL">
+            <wsdl:input message="tns:AdapterDB4CustomSQLInput_msg"/>
+            <wsdl:output message="tns:AdapterDB4CustomSQLOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

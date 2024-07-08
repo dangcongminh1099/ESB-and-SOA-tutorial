@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Jun 04 18:03:24 ICT 2024
+  Author:  minhdc3
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ConcatProcess"
+               targetNamespace="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatNameExposeService">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatProcess" location="../WSDLs/ConcatProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="ConcatService" partnerLinkType="client:ConcatProcess" myRole="ConcatProcessProvider"/>
+    <partnerLink name="ConcatNameExposeService" partnerLinkType="ns1:ConcatNameExposeService"
+                 myRole="ConcatNameExposeServiceProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:ConcatProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:ConcatProcessResponseMessage"/>
+    <variable name="receiveInput_process_InputVariable" messageType="client:ConcatProcessRequestMessage"/>
+    <variable name="replyOutput_process_OutputVariable" messageType="client:ConcatProcessResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ConcatProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="ConcatService" portType="client:ConcatProcess" operation="process"
+             variable="receiveInput_process_InputVariable" createInstance="yes"/>
+    <assign name="Assign1"></assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="ConcatService" portType="client:ConcatProcess" operation="process"
+           variable="replyOutput_process_OutputVariable"/>
+  </sequence>
+</process>

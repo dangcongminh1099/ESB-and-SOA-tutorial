@@ -1,0 +1,36 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ConcatNameExposeService"
+     targetNamespace="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatNameExposeService"
+     xmlns:tns="http://xmlns.oracle.com/Case6AppSOA/Case6ProjectSOA/ConcatNameExposeService"
+     xmlns:inp1="http://TargetNamespace.com/ConcatNameExposeService_ConCatOpr_request"
+     xmlns:inp2="http://TargetNamespace.com/ConcatNameExposeService_ConCatOpr_response"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="ConcatNameExposeService">
+        <plnk:role name="ConcatNameExposeServiceProvider" portType="tns:ConcatNameExposeService_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConcatNameExposeService_ConCatOpr_request"
+                 schemaLocation="../Schemas/req_concat_service_desc.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConcatNameExposeService_ConCatOpr_response"
+                 schemaLocation="../Schemas/resp_concat_service_desc.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ConCatOpr_inputMessage">
+        <wsdl:part name="request" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:message name="ConCatOpr_outputMessage">
+        <wsdl:part name="reply" element="inp2:Root-Element"/>
+    </wsdl:message>
+    <wsdl:portType name="ConcatNameExposeService_ptt">
+        <wsdl:operation name="ConCatOpr">
+            <wsdl:input message="tns:ConCatOpr_inputMessage"/>
+            <wsdl:output message="tns:ConCatOpr_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

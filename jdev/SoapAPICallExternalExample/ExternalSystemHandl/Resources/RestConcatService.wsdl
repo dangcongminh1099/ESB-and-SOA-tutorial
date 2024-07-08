@@ -1,0 +1,37 @@
+<wsdl:definitions name="RestConcatService" targetNamespace="http://xmlns.oracle.com/SoapAPICallExternalExample/ExternalSystemHandl/RestConcatService" xmlns:tns="http://xmlns.oracle.com/SoapAPICallExternalExample/ExternalSystemHandl/RestConcatService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="RestConcatService">
+        <plnk:role name="RestConcatServiceProvider" portType="tns:RestConcatService_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="es_desc_soap_req.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="ex_desc_resp.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ConcatOperation_inputMessage">
+        <wsdl:part name="request" element="minhdc-root"/>
+    </wsdl:message>
+    <wsdl:message name="ConcatOperation_outputMessage">
+        <wsdl:part name="reply" element="final-str"/>
+    </wsdl:message>
+    <wsdl:portType name="RestConcatService_ptt">
+        <wsdl:operation name="ConcatOperation">
+            <wsdl:input message="tns:ConcatOperation_inputMessage"/>
+            <wsdl:output message="tns:ConcatOperation_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RestConcatService_ptt-binding" type="tns:RestConcatService_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ConcatOperation">
+            <soap:operation soapAction="ConcatOperation"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

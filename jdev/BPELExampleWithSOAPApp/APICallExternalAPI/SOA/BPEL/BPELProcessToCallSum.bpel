@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Tue Apr 02 20:32:25 ICT 2024
+  Author:  minhdc3
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcessToCallSum"
+               targetNamespace="http://xmlns.oracle.com/BPELExampleWithSOAPApp/APICallExternalAPI/BPELProcessToCallSum"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/BPELExampleWithSOAPApp/APICallExternalAPI/BPELProcessToCallSum"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/BPELExampleWithSOAPApp/APICallExternalAPI/ExposeSumAPI"
+         xmlns:ns2="http://xmlns.oracle.com/BPELExampleWithSOAPApp/APICallExternalAPI/CallExternalAPIFromSoaSys"
+         xmlns:ns3="http://TargetNamespace.com/ExposeSumAPI_Operation1_request"
+         xmlns:ns4="http://TargetNamespace.com/CallExternalAPIFromSoaSys_SUMExternalOperation_response"
+         xmlns:ns5="http://TargetNamespace.com/ExposeSumAPI_Operation1_response">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <partnerLink name="ExposeSumAPI" partnerLinkType="ns1:ExposeSumAPI" myRole="ExposeSumAPIProvider"/>
+    <partnerLink name="CallExternalAPIFromSoaSys" partnerLinkType="ns2:CallExternalAPIFromSoaSys"
+                 partnerRole="CallExternalAPIFromSoaSysProvider"/>
+  </partnerLinks>
+  <variables>
+    <variable name="ReceiveNumbToSum_Operation1_InputVariable" messageType="ns1:Operation1_inputMessage"/>
+    <variable name="receiveByBpel" messageType="ns1:Operation1_inputMessage"/>
+    <variable name="respAfterSum" messageType="ns1:Operation1_outputMessage"/>
+    <variable name="request2ExternalSumAPI" messageType="ns2:SUMExternalOperation_inputMessage"/>
+    <variable name="respFrExternalSumAPI" messageType="ns2:SUMExternalOperation_outputMessage"/>
+  </variables>
+  <sequence name="main">
+    <receive name="ReceiveNumbToSum" createInstance="yes" partnerLink="ExposeSumAPI" portType="ns1:ExposeSumAPI_ptt"
+             operation="Operation1" variable="receiveByBpel"/>
+    <assign name="Request_Reiceive2ReqInvoke">
+      <copy>
+        <from>$receiveByBpel.request/ns3:param1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$request2ExternalSumAPI.request/ns2:param1</to>
+      </copy>
+      <copy>
+        <from>$receiveByBpel.request/ns3:param2</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$request2ExternalSumAPI.request/ns2:param2</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeExternalSum" partnerLink="CallExternalAPIFromSoaSys"
+            portType="ns2:CallExternalAPIFromSoaSys_ptt" operation="SUMExternalOperation"
+            inputVariable="request2ExternalSumAPI" outputVariable="respFrExternalSumAPI" bpelx:invokeAsDetail="no"/>
+    <assign name="Invokeresp2Resp">
+      <copy>
+        <from>$respFrExternalSumAPI.reply/ns4:result</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$respAfterSum.reply/ns5:final</to>
+      </copy>
+    </assign>
+    <reply name="ReplyResultSum" partnerLink="ExposeSumAPI" variable="respAfterSum" portType="ns1:ExposeSumAPI_ptt"
+           operation="Operation1"/>
+  </sequence>
+</process>

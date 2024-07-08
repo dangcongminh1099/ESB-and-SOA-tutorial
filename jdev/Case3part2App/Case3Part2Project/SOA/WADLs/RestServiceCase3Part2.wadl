@@ -1,0 +1,43 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_request" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RestServiceCase3Part2">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_request" schemaLocation="../Schemas/case3prt2_restservice_sumopr_req.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_response" schemaLocation="../Schemas/case3part2_restservice_sumopr_resp.xsd"/>
+        </xsd:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/Case3part2App/Case3Part2Project/RestServiceCase3Part2" elementFormDefault="qualified">
+            <element name="DoubleOpr_params">
+                <complexType>
+                    <sequence>
+                        <element name="param1" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+   </grammars>
+   <resources>
+      <resource path="/double">
+         <method name="POST" soa:wsdlOperation="SumOper">
+            <request>
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_request"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_response"/>
+            </response>
+         </method>
+         <method name="GET" soa:wsdlOperation="DoubleOpr">
+            <request soa:paramElement="pns:DoubleOpr_params" xmlns:pns="http://xmlns.oracle.com/Case3part2App/Case3Part2Project/RestServiceCase3Part2">
+               <param name="param1" style="query" soa:expression="$msg.request/pns:param1" type="xsd:string">
+                  <doc title="param1">param1</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Root-Element" xmlns:cns="http://TargetNamespace.com/RestServiceCase3Part2_SumOper_response"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

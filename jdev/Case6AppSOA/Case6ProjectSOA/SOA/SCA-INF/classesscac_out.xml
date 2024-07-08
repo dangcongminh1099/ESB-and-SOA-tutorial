@@ -1,0 +1,33 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']</loc>
+      <line>31</line>
+      <col/>
+      <file>BPEL/BPELProcess1.bpel</file>
+      <name>BPEL/BPELProcess1.bpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpel:process> "BPELProcess1" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']</loc>
+      <line>31</line>
+      <col/>
+      <file>BPEL/BPELProcess1.bpel</file>
+      <name>BPEL/BPELProcess1.bpel</name>
+      <fix>Fix the process to be *either* durable or synchronous.</fix>
+      <msg>Process "BPELProcess1" is both durable (onMessage,Receive,Wait) and synchronous.</msg>
+   </Fault>
+   <Fault>
+      <severity>error</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']</loc>
+      <line>31</line>
+      <col/>
+      <file>BPEL/BPELProcess1.bpel</file>
+      <name>BPEL/BPELProcess1.bpel</name>
+      <fix>A &lt;receive> or &lt;pick> with createInstance set to "true" must be present.</fix>
+      <msg>There is no start activity in process "BPELProcess1"</msg>
+   </Fault>
+</Faults>

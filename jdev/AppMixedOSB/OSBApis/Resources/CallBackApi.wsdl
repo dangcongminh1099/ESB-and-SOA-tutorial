@@ -1,0 +1,51 @@
+<wsdl:definitions name="CallBackApi" targetNamespace="http://xmlns.oracle.com/AppMixedOSB/OSBApis/CallBackApi" xmlns:tns="http://xmlns.oracle.com/AppMixedOSB/OSBApis/CallBackApi" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="CallBackApi">
+        <plnk:role name="CallBackApiProvider" portType="tns:CallBackApi_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="../../BackEndApi/Resources/BEA_RestApiFromInternalApp_req_desc.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:include schemaLocation="../../BackEndApi/Resources/BEA_RestApiFromInternalApp_resp_desc.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Rest_EmptyMessage"/>
+    <wsdl:message name="Operation2_inputMessage">
+        <wsdl:part name="request" element="req_restapifrominternalapp"/>
+    </wsdl:message>
+    <wsdl:message name="Operation2_outputMessage">
+        <wsdl:part name="reply" element="res_restapifrominternalapp"/>
+    </wsdl:message>
+    <wsdl:portType name="CallBackApi_ptt">
+        <wsdl:operation name="Operation1">
+            <wsdl:input message="tns:Rest_EmptyMessage"/>
+            <wsdl:output message="tns:Rest_EmptyMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Operation2">
+            <wsdl:input message="tns:Operation2_inputMessage"/>
+            <wsdl:output message="tns:Operation2_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CallBackApi_ptt-binding" type="tns:CallBackApi_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation1">
+            <soap:operation soapAction="Operation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Operation2">
+            <soap:operation soapAction="Operation2"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

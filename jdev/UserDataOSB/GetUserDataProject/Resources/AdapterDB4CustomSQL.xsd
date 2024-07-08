@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/AdapterDB4CustomSQL" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/AdapterDB4CustomSQL" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="AdapterDB4CustomSQLInput" type="AdapterDB4CustomSQLInput"/>
+   <xs:complexType name="AdapterDB4CustomSQLInput">
+      <xs:sequence>
+         <xs:element name="arg_age" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="AdapterDB4CustomSQLOutputCollection" type="AdapterDB4CustomSQLOutputCollection"/>
+   <xs:complexType name="AdapterDB4CustomSQLOutputCollection">
+      <xs:sequence>
+         <xs:element name="AdapterDB4CustomSQLOutput" type="AdapterDB4CustomSQLOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="AdapterDB4CustomSQLOutput">
+      <xs:sequence>
+         <xs:element name="a_firstname" type="xs:string" nillable="true"/>
+         <xs:element name="a_lastname" type="xs:string" nillable="true"/>
+         <xs:element name="a_age" type="xs:string" nillable="true"/>
+         <xs:element name="b_address" type="xs:string" nillable="true"/>
+         <xs:element name="b_national" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

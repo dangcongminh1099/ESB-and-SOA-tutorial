@@ -1,0 +1,37 @@
+<wsdl:definitions name="ConsumerServiceApi" targetNamespace="http://xmlns.oracle.com/FristAppOSB/ConsumerApiProjectTest/ConsumerServiceApi" xmlns:tns="http://xmlns.oracle.com/FristAppOSB/ConsumerApiProjectTest/ConsumerServiceApi" xmlns:inp1="http://TargetNamespace.com/ConsumerServiceApi_SumOperation_request" xmlns:inp2="http://TargetNamespace.com/ConsumerServiceApi_SumOperation_response" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="ConsumerServiceApi">
+        <plnk:role name="ConsumerServiceApiProvider" portType="tns:ConsumerServiceApi_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConsumerServiceApi_SumOperation_request" schemaLocation="consumer_service_req_desc.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://TargetNamespace.com/ConsumerServiceApi_SumOperation_response" schemaLocation="consumer_service_resp_desc.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="SumOperation_inputMessage">
+        <wsdl:part name="request" element="inp1:Root-Element"/>
+    </wsdl:message>
+    <wsdl:message name="SumOperation_outputMessage">
+        <wsdl:part name="reply" element="inp2:Root-Element"/>
+    </wsdl:message>
+    <wsdl:portType name="ConsumerServiceApi_ptt">
+        <wsdl:operation name="SumOperation">
+            <wsdl:input message="tns:SumOperation_inputMessage"/>
+            <wsdl:output message="tns:SumOperation_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ConsumerServiceApi_ptt-binding" type="tns:ConsumerServiceApi_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SumOperation">
+            <soap:operation soapAction="SumOperation"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

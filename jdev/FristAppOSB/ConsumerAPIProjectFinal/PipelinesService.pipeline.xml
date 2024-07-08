@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="ConsumerAPIProjectFinal/Resources/ProxyService4UseExternalAPI"/>
+            <con:binding>
+                <con:name>ProxyService4UseExternalAPI_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/FristAppOSB/ConsumerAPIProjectFinal/ProxyService4UseExternalAPI</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="prox1" namespace="http://TargetNamespace.com/ProxyService4UseExternalAPI_SumExternalAPIOperation_response"/>
+                    <con2:userNsDecl prefix="prox" namespace="http://TargetNamespace.com/ProxyService4UseExternalAPI_SumExternalAPIOperation_request"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N8000</con2:id>
+                        <con1:service ref="ConsumerAPIProjectFinal/FirstAPIESBReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>FirstAPIESBOpr</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:assign varName="request_from_proxy" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N7fc5</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="ConsumerAPIProjectFinal/mapping_rq_proxy_2_rq_ref"/>
+                                        <con2:param name="req_proxy">
+                                            <con2:path>$body/prox:Root-Element</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N7fc2</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>$request_from_proxy</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con3:assign varName="midConstantVar" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N7fbb</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>9999</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:assign varName="response_in_rpaction_pipeline" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N7fbe</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="ConsumerAPIProjectFinal/mapping_resp_ref_2_proxy"/>
+                                        <con2:param name="midConstantVar">
+                                            <con2:path>$body/prox1:Root-Element/prox1:mid</con2:path>
+                                        </con2:param>
+                                        <con2:param name="resp_proxy">
+                                            <con2:path>$body/prox1:Root-Element/prox1:finalResult</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N5601598f.6d620fb7.0.18e2cba8870.N7fb8</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>$response_in_rpaction_pipeline</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

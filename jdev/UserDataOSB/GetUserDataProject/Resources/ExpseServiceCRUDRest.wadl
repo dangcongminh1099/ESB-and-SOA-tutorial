@@ -1,0 +1,32 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="ExpseServiceCRUDRest">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterDbUserData" schemaLocation="AdapterDbUserData_table.xsd"/>
+        </xsd:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/UserDataOSB/GetUserDataProject/ExpseServiceCRUDRest" elementFormDefault="qualified">
+            <element name="SelectOperation_params">
+                <complexType>
+                    <sequence>
+                        <element name="id" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+   </grammars>
+   <resources>
+      <resource path="/select">
+         <method name="GET" soa:wsdlOperation="SelectOperation">
+            <request soa:paramElement="pns:SelectOperation_params" xmlns:pns="http://xmlns.oracle.com/UserDataOSB/GetUserDataProject/ExpseServiceCRUDRest">
+               <param name="id" style="query" soa:expression="$msg.request/pns:id" type="xsd:string">
+                  <doc title="id">id field</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:UserdataCollection" xmlns:cns="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterDbUserData"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
